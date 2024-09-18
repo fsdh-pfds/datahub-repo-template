@@ -19,6 +19,10 @@ jobs:
         ZIP_FILE="$(basename ${{ github.repository }})-$(date '+%Y-%m-%d').zip"
         zip -rq "${ZIP_FILE}" .
 
+    - name: Verify ZIP file exists
+      run: |
+        ls -lah "${ZIP_FILE}"
+
     - name: Send ZIP to Backup Bucket
       run: |
         curl -X POST "${{ secrets.REPO_BACKUP_URL }}" \
