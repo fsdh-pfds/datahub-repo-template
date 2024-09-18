@@ -17,7 +17,7 @@ jobs:
     - name: Create ZIP bundle
       id: create_zip
       run: |
-        ZIP_FILE="${{ github.repository }}-$(date '+%Y-%m-%d').zip"
+        ZIP_FILE="${{ github.event.repository.name }}-$(date '+%Y-%m-%d').zip"
         zip -rq "${ZIP_FILE}" .
         mkdir -p backups
         mv "${ZIP_FILE}" backups/
@@ -26,3 +26,9 @@ jobs:
     - name: Verify ZIP file exists
       run: |
         ls -lah ${{ steps.create_zip.outputs.zipfile }}
+
+    - name: Send ZIP to Backup Bucket
+      run: |
+        curl -X POST "${{ secrets.REPO_BACKUP_URL }}" \
+          -H "Content-Type: application/octet-stream" \
+          --data-binary @${{ steps.create_zip.outputs.zipfile }}
