@@ -16,13 +16,11 @@ jobs:
 
     - name: Create ZIP bundle
       run: |
-        ZIP_FILE="${{ github.repository }}-$(date '+%Y-%m-%d').zip"
+        ZIP_FILE="$(basename ${{ github.repository }})-$(date '+%Y-%m-%d').zip"
         zip -rq "${ZIP_FILE}" .
-        mkdir -p backups/${{ github.repository }}
-        mv "${ZIP_FILE}" backups/${{ github.repository }}
 
     - name: Send ZIP to Backup Bucket
       run: |
-        curl -X POST "${{ secrets.GITHUB_BACKUP_URL }}" \
+        curl -X POST "${{ secrets.REPO_BACKUP_URL }}" \
           -H "Content-Type: application/octet-stream" \
-          --data-binary @backups/${{ github.repository }}/${ZIP_FILE}
+          --data-binary @"${ZIP_FILE}"
