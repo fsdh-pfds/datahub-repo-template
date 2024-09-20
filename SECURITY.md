@@ -12,7 +12,9 @@ If you discover a security vulnerability, please report it privately by emailing
 ---
 
 <!-- markdownlint-disable MD025 -->
+
 # Politique de Sécurité
+
 <!-- markdownlint-enable MD025 -->
 
 ## Signaler un problème de sécurité

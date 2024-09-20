@@ -73,7 +73,9 @@ Community leaders will follow these Community Impact Guidelines in determining
 the consequences for any action they deem in violation of this Code of Conduct:
 
 <!-- markdownlint-disable MD024 -->
+
 ### 1. Correction
+
 <!-- markdownlint-enable MD024 -->
 
 **Community Impact**: Use of inappropriate language or other behavior deemed
@@ -116,7 +118,9 @@ individual, or aggression toward or disparagement of classes of individuals.
 the community.
 
 <!-- markdownlint-disable MD024 -->
+
 ## Attribution
+
 <!-- markdownlint-enable MD024 -->
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage],
@@ -135,7 +139,9 @@ For answers to common questions about this code of conduct, see the FAQ at
 ---
 
 <!-- markdownlint-disable MD025 -->
+
 # Code de conduite de la Charte des contributeurs
+
 <!-- markdownlint-enable MD025 -->
 
 ## Notre engagement
@@ -193,7 +199,11 @@ Des détails supplémentaires sur les politiques de mise en application précise
 
 Les responsables communautaires suivront ces consignes relatives à l’incidence communautaire pour déterminer les conséquences de toute action qu’ils jugent contraire à ce Code de conduite :
 
+<!-- markdownlint-disable MD024 -->
+
 ### 1. Correction
+
+<!-- markdownlint-enable MD024 -->
 
 **Incidence communautaire** : Utilisation d’un langage inapproprié ou d’un autre comportement jugé non professionnel ou indésirable dans la communauté.
 
@@ -224,7 +234,11 @@ personne ou une agression ou le dénigrement de catégories de personnes.
 **Conséquence** : Interdiction permanente de toute forme d’interaction publique au sein de
 la communauté.
 
+<!-- markdownlint-disable MD024 -->
+
 ## Attribution
+
+<!-- markdownlint-enable MD024 -->
 
 Ce Code de conduite est adapté de la [Charte des contributeurs](https://www.contributor-covenant.org)
 version 2.0, disponible à <https://www.contributor-covenant.org/version/2/0/code_of_conduct.html>.
