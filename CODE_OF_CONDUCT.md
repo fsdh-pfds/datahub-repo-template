@@ -134,9 +134,9 @@ For answers to common questions about this code of conduct, see the FAQ at
 
 ## Notre engagement
 
-En tant que membres, contributeurs et responsables, nous nous engageons à participer dans notre communauté à une expérience 
-exempte de harcèlement pour tous, peu importe l’âge, la taille corporelle, les handicaps visibles ou invisibles, l’origine ethnique, 
-les caractéristiques sexuelles, l’identité de genre et l’expression sexuelle, le niveau d’expérience, l’éducation, la situation socioéconomique, 
+En tant que membres, contributeurs et responsables, nous nous engageons à participer dans notre communauté à une expérience
+exempte de harcèlement pour tous, peu importe l’âge, la taille corporelle, les handicaps visibles ou invisibles, l’origine ethnique,
+les caractéristiques sexuelles, l’identité de genre et l’expression sexuelle, le niveau d’expérience, l’éducation, la situation socioéconomique,
 la nationalité, l’apparence personnelle, la race, la religion ou l’identité sexuelle et l’orientation sexuelle.
 
 Nous nous engageons à agir et à interagir de manière à contribuer à une communauté ouverte, accueillante, diversifiée, inclusive et saine.
@@ -167,13 +167,13 @@ Les responsables communautaires doivent clarifier et faire respecter nos normes 
 comportement acceptable et ils prendront des mesures correctives appropriées et justes en
 réponse à tout comportement qu’ils jugent inapproprié, menaçant, offensant ou nuisible.
 
-Les responsables communautaires ont le droit et la responsabilité de supprimer, de modifier ou de rejeter des commentaires, des validations, un code, 
+Les responsables communautaires ont le droit et la responsabilité de supprimer, de modifier ou de rejeter des commentaires, des validations, un code,
 des modifications de wiki, des problèmes et d’autres contributions qui ne cadrent pas avec le présent Code de conduite. Ils communiqueront les raisons des décisions de modération, s’il y a lieu.
 
 ## Portée
 
 Ce Code de conduite s’applique dans tous les espaces communautaires et s’applique également lorsqu’une personne représente officiellement la communauté dans des espaces publics.
-Les exemples de représentation de notre communauté comprennent l’utilisation d’une adresse électronique officielle, la publication de messages en utilisant 
+Les exemples de représentation de notre communauté comprennent l’utilisation d’une adresse électronique officielle, la publication de messages en utilisant
 un compte officiel de médias sociaux ou en agissant à titre de représentant nommé à un événement en ligne ou hors ligne.
 
 ## Mise en application
@@ -199,7 +199,7 @@ Des excuses publiques peuvent être demandées.
 **Incidence communautaire** : Une violation au cours d’un seul incident ou d’une série
 d’actes.
 
-**Conséquence** : Un avertissement indiquant les conséquences si le comportement continue. Aucune interaction avec les personnes concernées, y compris l’interaction non sollicitée avec les personnes qui appliquent 
+**Conséquence** : Un avertissement indiquant les conséquences si le comportement continue. Aucune interaction avec les personnes concernées, y compris l’interaction non sollicitée avec les personnes qui appliquent
 le Code de conduite, pour une période déterminée. Pour ce faire, les interactions dans les espaces communautaires ainsi que par les voies externes telles que les médias sociaux sont à éviter. La violation de ces conditions peut conduire à une interdiction temporaire ou permanente.
 
 ### 3. Interdiction temporaire
