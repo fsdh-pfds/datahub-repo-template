@@ -19,7 +19,7 @@ jobs:
 
     - name: Create ZIP bundle
       run: |
-        ZIP_FILE=`basename ${{ github.repository }}`-`date '+%Y-%m-%d'`.zip
+        ZIP_FILE=$(basename ${{ github.repository }})-$(date '+%Y-%m-%d').zip
         zip -rq "${ZIP_FILE}" .
         mkdir -p ${{ github.repository }}
         mv "${ZIP_FILE}" ${{ github.repository }}
