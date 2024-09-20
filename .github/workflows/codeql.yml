@@ -25,11 +25,11 @@ jobs:
       matrix:
         include:
         - language: javascript-typescript
-          build-mode: autobuild 
+          build-mode: none 
         - language: python
-          build-mode: autobuild 
+          build-mode: none 
         - language: csharp
-          build-mode: autobuild 
+          build-mode: none 
         - language: c-cpp
           build-mode: autobuild 
         - language: go
@@ -37,7 +37,7 @@ jobs:
         - language: java-kotlin
           build-mode: autobuild     
         - language: ruby
-          build-mode: autobuild 
+          build-mode: none 
         - language: swift
           build-mode: autobuild    
     steps:
