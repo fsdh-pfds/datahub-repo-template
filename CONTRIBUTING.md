@@ -24,7 +24,7 @@ We welcome external contributions to our project. However, all contributions fro
 **Do not post any security issues on the public repository!** See
 [SECURITY.md](SECURITY.md)
 
-______________________
+---
 
 ## Comment contribuer
 
