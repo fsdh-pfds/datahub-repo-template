@@ -25,21 +25,21 @@ jobs:
       matrix:
         include:
         - language: javascript-typescript
-          build-mode: none
+          build-mode: autobuild 
         - language: python
-          build-mode: none
+          build-mode: autobuild 
         - language: csharp
-          build-mode: none
+          build-mode: autobuild 
         - language: c-cpp
-          build-mode: none
+          build-mode: autobuild 
         - language: go
-          build-mode: none
+          build-mode: autobuild 
         - language: java-kotlin
-          build-mode: none    
+          build-mode: autobuild     
         - language: ruby
-          build-mode: none
+          build-mode: autobuild 
         - language: swift
-          build-mode: none   
+          build-mode: autobuild    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
