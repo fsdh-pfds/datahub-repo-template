@@ -1,7 +1,7 @@
 ---
 name: Lint
 
-on: 
+on:
   push: {}
   pull_request: {}
 
@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: read
       packages: read
-      statuses: write  # To report GitHub Actions status checks
+      statuses: write # To report GitHub Actions status checks
 
     steps:
       - name: Checkout code
@@ -26,4 +26,4 @@ jobs:
       - name: Super-linter
         uses: super-linter/super-linter@v7.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # To report GitHub Actions status checks
