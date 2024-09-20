@@ -72,7 +72,9 @@ Further details of specific enforcement policies may be posted separately.
 Community leaders will follow these Community Impact Guidelines in determining
 the consequences for any action they deem in violation of this Code of Conduct:
 
+<!-- markdownlint-disable MD024 -->
 ### 1. Correction
+<!-- markdownlint-enable MD024 -->
 
 **Community Impact**: Use of inappropriate language or other behavior deemed
 unprofessional or unwelcome in the community.
@@ -113,7 +115,9 @@ individual, or aggression toward or disparagement of classes of individuals.
 **Consequence**: A permanent ban from any sort of public interaction within
 the community.
 
+<!-- markdownlint-disable MD024 -->
 ## Attribution
+<!-- markdownlint-enable MD024 -->
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage],
 version 2.0, available at
@@ -130,7 +134,9 @@ For answers to common questions about this code of conduct, see the FAQ at
 
 ---
 
+<!-- markdownlint-disable MD025 -->
 # Code de conduite de la Charte des contributeurs
+<!-- markdownlint-enable MD025 -->
 
 ## Notre engagement
 
