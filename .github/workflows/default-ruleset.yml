@@ -19,6 +19,6 @@ jobs:
     - name: Configure repository settings
       run: |
         gh api "repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/rulesets" \
-          --method PATCH \
+          --method POST \
           --silent \
           --field name="Default Branches" 
