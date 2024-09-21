@@ -1,4 +1,4 @@
-name: Configure Repository Settings
+name: Configure Branch Protection
 
 on:
   schedule:
@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  configure_repo:
+  configure_ruleset:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Authenticate GitHub CLI
       run: echo "${{ secrets.REPO_ADMIN_ACCESS_TOKEN }}" | gh auth login --with-token
