@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
     - name: Authenticate GitHub CLI
       run: echo "${{ secrets.REPO_ADMIN_ACCESS_TOKEN }}" | gh auth login --with-token
