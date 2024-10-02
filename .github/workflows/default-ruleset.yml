@@ -10,17 +10,25 @@ jobs:
   configure_ruleset:
     runs-on: ubuntu-latest
     steps:
+    - name: Convert App token
+      id: create_token  # 'id' and 'name' go together within the same step
+      uses: tibdex/github-app-token@v2
+      with:
+        app_id: ${{ secrets.FSDH_REPO_ADMIN_APP_ID }}
+        private_key: ${{ secrets.FSDH_REPO_ADMIN_APP_KEY }}
+    - run: "echo 'The created token is masked: ${{ steps.create_token.outputs.token }}'"
+
     - name: Checkout the repository
       uses: actions/checkout@v4
 
     - name: Set up GitHub CLI
-      run: gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+      run: gh auth login --with-token <<< "${{ steps.create_token.outputs.token }}"
 
     - name: Configure repository settings
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ steps.create_token.outputs.token }}
       run: |
-        gh api "repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/rulesets" \
+        gh api "repos/${{ github.repository }}/rulesets" \
           --method POST \
           --silent \
           -H "Accept: application/vnd.github+json" \
