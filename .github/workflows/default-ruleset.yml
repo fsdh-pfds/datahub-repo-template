@@ -1,4 +1,4 @@
-name: Configure Default Branch Protection
+name: Configure Branch Protection Rulesets
 
 on:
   schedule:
@@ -9,16 +9,14 @@ on:
 jobs:
   configure_ruleset:
     runs-on: ubuntu-latest
-    
-    steps:
 
+    steps:
     - name: Convert App token
       id: create_token 
       uses: getsentry/action-github-app-token@v3.0.0
       with:
         app_id: ${{ vars.FSDH_REPO_ADMIN_APP_ID }}
         private_key: ${{ secrets.FSDH_REPO_ADMIN_APP_KEY }}
-    - run: "echo 'The created token is masked: ${{ steps.create_token.outputs.token }}'"
 
     - name: Checkout the repository
       uses: actions/checkout@v4
@@ -26,13 +24,31 @@ jobs:
     - name: Set up GitHub CLI
       run: gh auth login --with-token <<< "${{ steps.create_token.outputs.token }}"
 
-    - name: Configure repository settings
+    - name: Delete all existing rulesets
       env:
         GH_TOKEN: ${{ steps.create_token.outputs.token }}
       run: |
-        gh api "repos/${{ github.repository }}/rulesets" \
-          --method POST \
-          --silent \
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          --input .github/workflows/branch-rulesets/default-branch.json
+        # Get the list of existing rulesets
+        existing_rulesets=$(gh api "repos/${{ github.repository }}/rulesets" --jq '.[].id')
+        
+        # Loop through and delete each ruleset
+        for ruleset_id in $existing_rulesets; do
+          echo "Deleting ruleset ID $ruleset_id"
+          gh api "repos/${{ github.repository }}/rulesets/$ruleset_id" \
+            --method DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" || exit 1
+        done
+
+    - name: Loop through and configure repository settings
+      env:
+        GH_TOKEN: ${{ steps.create_token.outputs.token }}
+      run: |
+        for file in .github/workflows/branch-rulesets/*.json; do
+          echo "Applying ruleset from $file"
+          gh api "repos/${{ github.repository }}/rulesets" \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            --input "$file" || exit 1
+        done
