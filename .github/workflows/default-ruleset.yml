@@ -39,7 +39,7 @@ jobs:
             # Ruleset exists, update it with PATCH
             echo "Updating ruleset $ruleset_name with ID $existing_ruleset_id"
             gh api "repos/${{ github.repository }}/rulesets/$existing_ruleset_id" \
-              --method PATCH \
+              --method PUT \
               -H "Accept: application/vnd.github+json" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               --input "$file" || exit 1
