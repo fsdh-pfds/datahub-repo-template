@@ -9,10 +9,12 @@ on:
 jobs:
   configure_ruleset:
     runs-on: ubuntu-latest
+    
     steps:
+
     - name: Convert App token
-      id: create_token  # 'id' and 'name' go together within the same step
-      uses: tibdex/github-app-token@v2
+      id: create_token 
+      uses: getsentry/action-github-app-token@v3.1
       with:
         app_id: ${{ secrets.FSDH_REPO_ADMIN_APP_ID }}
         private_key: ${{ secrets.FSDH_REPO_ADMIN_APP_KEY }}
