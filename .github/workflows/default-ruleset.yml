@@ -24,31 +24,32 @@ jobs:
     - name: Set up GitHub CLI
       run: gh auth login --with-token <<< "${{ steps.create_token.outputs.token }}"
 
-    - name: Delete all existing rulesets
-      env:
-        GH_TOKEN: ${{ steps.create_token.outputs.token }}
-      run: |
-        # Get the list of existing rulesets
-        existing_rulesets=$(gh api "repos/${{ github.repository }}/rulesets" --jq '.[].id')
-        
-        # Loop through and delete each ruleset
-        for ruleset_id in $existing_rulesets; do
-          echo "Deleting ruleset ID $ruleset_id"
-          gh api "repos/${{ github.repository }}/rulesets/$ruleset_id" \
-            --method DELETE \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" || exit 1
-        done
-
     - name: Loop through and configure repository settings
       env:
         GH_TOKEN: ${{ steps.create_token.outputs.token }}
       run: |
         for file in .github/workflows/branch-rulesets/*.json; do
-          echo "Applying ruleset from $file"
-          gh api "repos/${{ github.repository }}/rulesets" \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            --input "$file" || exit 1
+          # Extracting a unique identifier for the ruleset from the file
+          ruleset_name=$(jq -r '.name' "$file")
+          
+          # Check if the ruleset already exists
+          existing_ruleset_id=$(gh api "repos/${{ github.repository }}/rulesets" --jq ".[] | select(.name == \"$ruleset_name\") | .id")
+
+          if [ -n "$existing_ruleset_id" ]; then
+            # Ruleset exists, update it with PATCH
+            echo "Updating ruleset $ruleset_name with ID $existing_ruleset_id"
+            gh api "repos/${{ github.repository }}/rulesets/$existing_ruleset_id" \
+              --method PATCH \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              --input "$file" || exit 1
+          else
+            # Ruleset doesn't exist, create it with POST
+            echo "Creating new ruleset $ruleset_name"
+            gh api "repos/${{ github.repository }}/rulesets" \
+              --method POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              --input "$file" || exit 1
+          fi
         done
