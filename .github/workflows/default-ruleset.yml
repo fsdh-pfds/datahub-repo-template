@@ -25,4 +25,4 @@ jobs:
           --silent \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          --input ./branch-rulesets/default-branch.json
+          --input .github/workflows/branch-rulesets/default-branch.json
