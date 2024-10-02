@@ -24,53 +24,32 @@ jobs:
     - name: Set up GitHub CLI
       run: gh auth login --with-token <<< "${{ steps.create_token.outputs.token }}"
 
-    - name: Apply or update rulesets
+    - name: Loop through and configure repository settings
       env:
         GH_TOKEN: ${{ steps.create_token.outputs.token }}
       run: |
         for file in .github/workflows/branch-rulesets/*.json; do
-          # Extract the name of the ruleset from the JSON file
+          # Extracting a unique identifier for the ruleset from the file
           ruleset_name=$(jq -r '.name' "$file")
           
-          # Check if the ruleset already exists in GitHub
+          # Check if the ruleset already exists (quote the ruleset name)
           existing_ruleset_id=$(gh api "repos/${{ github.repository }}/rulesets" --jq ".[] | select(.name == \"$ruleset_name\") | .id")
 
           if [ -n "$existing_ruleset_id" ]; then
-            # Update the existing ruleset with PUT
-            echo "Updating ruleset $ruleset_name with ID $existing_ruleset_id"
+            # Ruleset exists, update it with PUT (quote ruleset name in echo)
+            echo "Updating ruleset \"$ruleset_name\" with ID $existing_ruleset_id"
             gh api "repos/${{ github.repository }}/rulesets/$existing_ruleset_id" \
               --method PUT \
               -H "Accept: application/vnd.github+json" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               --input "$file" || exit 1
           else
-            # Create a new ruleset if it doesn't exist
-            echo "Creating new ruleset $ruleset_name"
+            # Ruleset doesn't exist, create it with POST (quote ruleset name in echo)
+            echo "Creating new ruleset \"$ruleset_name\""
             gh api "repos/${{ github.repository }}/rulesets" \
               --method POST \
               -H "Accept: application/vnd.github+json" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               --input "$file" || exit 1
-          fi
-        done
-
-    - name: Cleanup unused rulesets
-      env:
-        GH_TOKEN: ${{ steps.create_token.outputs.token }}
-      run: |
-        # Get a list of all rulesets that exist in GitHub, one per line
-        existing_rulesets=$(gh api "repos/${{ github.repository }}/rulesets" --jq '.[] | .name' --raw-output)
-
-        # Loop through the existing rulesets, handling names with spaces safely
-        echo "$existing_rulesets" | while IFS= read -r ruleset_name; do
-          # Check if this ruleset has a corresponding file in the local ruleset folder
-          if [ ! -f ".github/workflows/branch-rulesets/${ruleset_name}.json" ]; then
-            # If the file does not exist, delete the ruleset from GitHub
-            echo "Deleting unused ruleset: $ruleset_name"
-            ruleset_id=$(gh api "repos/${{ github.repository }}/rulesets" --jq ".[] | select(.name == \"$ruleset_name\") | .id")
-            gh api "repos/${{ github.repository }}/rulesets/$ruleset_id" \
-              --method DELETE \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" || exit 1
           fi
         done
