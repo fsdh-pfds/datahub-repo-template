@@ -3,11 +3,10 @@ name: Configure Branch Protection Rulesets
 on:
   push:
     branches:
-      - ${{ github.default_branch }}  # Dynamically references the default branch
+      - ${{ github.default_branch }}
     paths:
       - '.github/workflows/branch-rulesets/*.json'
   schedule:
-    # Run the workflow every hour
     - cron: '0 6 * * *'
   workflow_dispatch:
 
