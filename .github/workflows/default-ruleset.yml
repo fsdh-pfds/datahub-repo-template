@@ -28,15 +28,15 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.create_token.outputs.token }}
       run: |
-        # List all rulesets that currently exist on GitHub
-        existing_rulesets=$(gh api "repos/${{ github.repository }}/rulesets" --jq '.[].name')
+        # List all rulesets that currently exist on GitHub and store them in an array
+        mapfile -t existing_rulesets < <(gh api "repos/${{ github.repository }}/rulesets" --jq '.[].name')
 
-        # List all ruleset names defined in .json files
-        configured_rulesets=$(for file in .github/workflows/branch-rulesets/*.json; do jq -r '.name' "$file"; done)
+        # List all ruleset names defined in .json files and store them in an array
+        mapfile -t configured_rulesets < <(for file in .github/workflows/branch-rulesets/*.json; do jq -r '.name' "$file"; done)
 
         # Loop through existing rulesets, and delete the ones that don't have a corresponding JSON file
-        for ruleset_name in $existing_rulesets; do
-          if ! echo "$configured_rulesets" | grep -q "^$ruleset_name$"; then
+        for ruleset_name in "${existing_rulesets[@]}"; do
+          if ! printf '%s\n' "${configured_rulesets[@]}" | grep -qx "$ruleset_name"; then
             echo "Deleting unmatched ruleset: $ruleset_name"
             ruleset_id=$(gh api "repos/${{ github.repository }}/rulesets" --jq ".[] | select(.name == \"$ruleset_name\") | .id")
             gh api "repos/${{ github.repository }}/rulesets/$ruleset_id" \
