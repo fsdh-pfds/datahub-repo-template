@@ -2,8 +2,6 @@ name: Configure Branch Protection Rulesets
 
 on:
   push:
-    branches:
-      *
     paths:
       - '.github/workflows/branch-rulesets/*.json'
   schedule:
