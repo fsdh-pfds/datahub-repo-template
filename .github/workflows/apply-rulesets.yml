@@ -3,7 +3,7 @@ name: Configure Branch Protection Rulesets
 on:
   push:
     branches:
-      - ${{ github.default_branch }}
+      *
     paths:
       - '.github/workflows/branch-rulesets/*.json'
   schedule:
@@ -11,6 +11,8 @@ on:
   workflow_dispatch:
 
 jobs:
+  job-one:
+    if: github.ref_name == github.event.repository.default_branch
   configure_ruleset:
     runs-on: ubuntu-latest
 
