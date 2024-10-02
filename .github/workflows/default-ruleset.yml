@@ -28,21 +28,17 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.create_token.outputs.token }}
       run: |
-        # List all rulesets that currently exist on GitHub and store them in an array
-        mapfile -t existing_rulesets < <(gh api "repos/${{ github.repository }}/rulesets" --jq '.[].name')
-
-        # List all ruleset names defined in .json files and store them in an array
-        mapfile -t configured_rulesets < <(for file in .github/workflows/branch-rulesets/*.json; do jq -r '.name' "$file"; done)
-
-        # Loop through existing rulesets, and delete the ones that don't have a corresponding JSON file
-        for ruleset_name in "${existing_rulesets[@]}"; do
-          if ! printf '%s\n' "${configured_rulesets[@]}" | grep -qx "$ruleset_name"; then
+        # List all rulesets that currently exist on GitHub and handle them line by line
+        gh api "repos/${{ github.repository }}/rulesets" --jq '.[].name' | while IFS= read -r ruleset_name; do
+          # List all ruleset names defined in .json files and check if the ruleset is configured
+          if ! grep -q "\"name\": \"$ruleset_name\"" .github/workflows/branch-rulesets/*.json; then
             echo "Deleting unmatched ruleset: $ruleset_name"
             ruleset_id=$(gh api "repos/${{ github.repository }}/rulesets" --jq ".[] | select(.name == \"$ruleset_name\") | .id")
             gh api "repos/${{ github.repository }}/rulesets/$ruleset_id" \
               --method DELETE \
               -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" || exit 1
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              --header "Authorization: token $GH_TOKEN" || { echo "Failed to delete ruleset: $ruleset_name"; exit 1; }
           fi
         done
 
