@@ -58,11 +58,11 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.create_token.outputs.token }}
       run: |
-        # Get a list of all rulesets that exist in GitHub
-        existing_rulesets=$(gh api "repos/${{ github.repository }}/rulesets" --jq '.[] | .name')
+        # Get a list of all rulesets that exist in GitHub, one per line
+        existing_rulesets=$(gh api "repos/${{ github.repository }}/rulesets" --jq '.[] | .name' --raw-output)
 
-        # Loop through the existing rulesets
-        for ruleset_name in $existing_rulesets; do
+        # Loop through the existing rulesets, handling names with spaces safely
+        echo "$existing_rulesets" | while IFS= read -r ruleset_name; do
           # Check if this ruleset has a corresponding file in the local ruleset folder
           if [ ! -f ".github/workflows/branch-rulesets/${ruleset_name}.json" ]; then
             # If the file does not exist, delete the ruleset from GitHub
