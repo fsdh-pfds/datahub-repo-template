@@ -1,0 +1,33 @@
+name: Scan PR on Security Alerts
+
+on:
+  pull_request:
+
+
+permissions:
+  security-events: read
+
+jobs:
+  fail-on-security-alerts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fail if code-scanning alerts ≥ warning
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Fetch all open alerts for this PR’s head SHA,
+          # filter to warning|error|critical, count them
+          count=$(gh api \
+            repos/${{ github.repository }}/code-scanning/alerts \
+            -f ref=${{ github.event.pull_request.head.sha }} \
+            -f state=open \
+            --jq '[.[] | select(.rule.severity | test("(?i)warning|error|critical"))] | length'
+          )
+
+          if [ "$count" -gt 0 ]; then
+            echo "Found $count security alert(s) (warning+) on this PR. Failing check."
+            exit 1
+          else
+            echo "No security alerts of warning or higher."
+          fi
