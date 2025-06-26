@@ -16,8 +16,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Fetch all open alerts for this PR’s head SHA,
-          # filter to warning|error|critical, count them
           count=$(gh api \
             repos/${{ github.repository }}/code-scanning/alerts \
             -f ref=${{ github.event.pull_request.head.sha }} \
